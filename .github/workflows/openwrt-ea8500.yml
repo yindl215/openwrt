@@ -66,12 +66,16 @@ jobs:
           mkdir kenzo
           cd kenzo
           git clone https://github.com/kenzok8/openwrt-packages.git
+          ls
+          cd ../../
       - name: add kenzo8 small  
         run: |
            cd ./package
            mkdir small
            cd small
            git clone https://github.com/kenzok8/small.git
+           ls
+           cd ../../
       - name: Update feeds
         run: |
           ./scripts/feeds update -a

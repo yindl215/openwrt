@@ -8,6 +8,13 @@
 name: OpenWrt-CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      clean_cache:
+        description: 'Clear caches'
+        required: false
+        type: boolean
+
   push:
     branches: 
       - master
@@ -31,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: openwrt-19.07
 
       - name: Space cleanup
         env:
@@ -740,8 +747,6 @@ jobs:
           CONFIG_PACKAGE_luci-mod-status=y
           CONFIG_PACKAGE_luci-mod-system=y
           CONFIG_PACKAGE_luci-app-adblock=y
-          CONFIG_PACKAGE_luci-app-adguardhome=y
-          CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
           CONFIG_PACKAGE_luci-app-advanced-reboot=y
           CONFIG_PACKAGE_luci-app-argon-config=y
           CONFIG_PACKAGE_luci-app-argonne-config=y
@@ -868,7 +873,6 @@ jobs:
           CONFIG_PACKAGE_ddnsto=y
           CONFIG_PACKAGE_haproxy=y
           CONFIG_PACKAGE_microsocks=y
-          CONFIG_PACKAGE_naiveproxy=y
           CONFIG_PACKAGE_redsocks2=y
           CONFIG_PACKAGE_shadowsocks-libev-config=y
           CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
@@ -930,6 +934,9 @@ jobs:
           CONFIG_PACKAGE_ubi-utils=y      
           EOF
           #
+          # CONFIG_PACKAGE_luci-app-adguardhome=y
+          # CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
+          # CONFIG_PACKAGE_naiveproxy=y
           # ===============================================================
           # 
           sed -i 's/^[ \t]*//g' ./.config

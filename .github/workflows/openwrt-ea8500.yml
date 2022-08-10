@@ -73,7 +73,7 @@ jobs:
       
       - name: modify download.pl
         run: |
-          sed -i 's/#push @mirrors, \'https:\/\/mirror1.openwrt.org\';/push @mirrors, \'https:\/\/sources.cdn.openwrt.org\';/g' ./scripts/download.pl
+          sed -i 's/#push @mirrors, ||\'https:\/\/mirror1.openwrt.org\';/push @mirrors, \'https:\/\/sources.cdn.openwrt.org\';/g' ./scripts/download.pl
         
       - name: Generate configuration file
         run: |

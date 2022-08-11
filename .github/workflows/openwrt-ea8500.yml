@@ -825,7 +825,6 @@ jobs:
           CONFIG_PACKAGE_luci-lib-nixio=y
           CONFIG_PACKAGE_luci-lib-nixio_notls=y
           CONFIG_PACKAGE_luci-i18n-adblock-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-argonne-config-zh-cn=y
@@ -835,7 +834,6 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-ddnsto-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-iptvhelper-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-omcproxy-zh_Hans=y
           CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
@@ -888,7 +886,6 @@ jobs:
           CONFIG_PACKAGE_v2raya=y
           CONFIG_PACKAGE_xray-plugin=y
           CONFIG_PACKAGE_adblock=y
-          CONFIG_PACKAGE_adguardhome=y
           CONFIG_PACKAGE_etherwake=y
           CONFIG_PACKAGE_hostapd-common=y
           CONFIG_PACKAGE_ipset=y
@@ -899,7 +896,6 @@ jobs:
           CONFIG_PACKAGE_odhcp6c_ext_cer_id=0
           CONFIG_PACKAGE_odhcpd-ipv6only=y
           CONFIG_PACKAGE_odhcpd_ipv6only_ext_cer_id=0
-          CONFIG_PACKAGE_omcproxy=y
           CONFIG_PACKAGE_ppp=y
           CONFIG_PACKAGE_ppp-mod-pppoe=y
           CONFIG_PACKAGE_simple-obfs=y
@@ -934,8 +930,12 @@ jobs:
           #
           # CONFIG_PACKAGE_luci-app-adguardhome=y
           # CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
+          # CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
+          # CONFIG_PACKAGE_adguardhome=y
           # CONFIG_PACKAGE_naiveproxy=y
           # CONFIG_PACKAGE_luci-app-omcproxy=y
+          # CONFIG_PACKAGE_luci-i18n-omcproxy-zh_Hans=y
+          # CONFIG_PACKAGE_omcproxy=y
           # ===============================================================
           # 
           sed -i 's/^[ \t]*//g' ./.config

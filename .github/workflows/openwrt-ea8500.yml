@@ -73,12 +73,12 @@ jobs:
   
       - name: modify makefile
         run: |
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/lua-maxminddb/Makefile
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/redsocks2/Makefile
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/chinadns-ng/Makefile
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/dns2tcp/Makefile
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/pdnsd-alt/Makefile
-          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/trojan-plus/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/lua-maxminddb/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/redsocks2/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/chinadns-ng/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/dns2tcp/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/pdnsd-alt/Makefile
+          sed -i 's/PKG_SOURCE_VERSION:=*$/PKG_SOURCE_VERSION:=master/g;s/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/trojan-plus/Makefile
 
       - name: modify download.pl
         run: |

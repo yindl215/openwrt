@@ -70,7 +70,16 @@ jobs:
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-      
+  
+      - name: modify makefile
+        run: |
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/lua-maxminddb/Makefile
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/kenzo/redsocks2/Makefile
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/chinadns-ng/Makefile
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/dns2tcp/Makefile
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/pdnsd-alt/Makefile
+          sed -i 's/PKG_MIRROR_HASH:=*$/PKG_MIRROR_HASH:=skip/g' ./feeds/small/trojan-plus/Makefile
+
       - name: modify download.pl
         run: |
           sed -i "s/#push @mirrors, 'https:\/\/mirror1.openwrt.org';/push @mirrors, 'https:\/\/sources.cdn.openwrt.org';/g" ./scripts/download.pl

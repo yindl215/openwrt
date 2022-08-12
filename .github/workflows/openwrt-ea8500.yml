@@ -940,17 +940,18 @@ jobs:
           # 
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
+      - name: Make download
+        run: |
+          make download -j1 V=s
+          rm -rf $(find ./dl/ -size -1024c)
+          df -h
+          
       - name: download some code
         run: |
           cd ./dl
           wget -c -r -nd -np http://204.13.154.47:1000/openwrt-dl/
           rm -rf $(find ./dl/ -name "index.html*")
           
-      - name: Make download
-        run: |
-          make download -j1 V=s
-          rm -rf $(find ./dl/ -size -1024c)
-          df -h
       - name: Compile firmware
         run: |
           make -j1 V=sc

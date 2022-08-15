@@ -879,7 +879,6 @@ jobs:
           CONFIG_PACKAGE_shadowsocksr-libev-ssr-server=y
           CONFIG_PACKAGE_trojan-go=y
           CONFIG_PACKAGE_uhttpd=y
-          CONFIG_PACKAGE_v2ray-plugin=y
           CONFIG_PACKAGE_v2raya=y
           CONFIG_PACKAGE_xray-plugin=y
           CONFIG_PACKAGE_adblock=y
@@ -933,6 +932,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-omcproxy=y
           # CONFIG_PACKAGE_luci-i18n-omcproxy-zh_Hans=y
           # CONFIG_PACKAGE_omcproxy=y
+          # CONFIG_PACKAGE_v2ray-plugin=y
           # ===============================================================
           # 
           sed -i 's/^[ \t]*//g' ./.config

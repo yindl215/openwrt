@@ -55,7 +55,7 @@ jobs:
           df -h
       - name: add kenzo8/openwrt-packages and kenzo8/small
         run: |
-          git pull
+          # git pull
           sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' ./feeds.conf.default
           sed -i '$a src-git small https://github.com/kenzok8/small' ./feeds.conf.default
           du -h --max-depth=1

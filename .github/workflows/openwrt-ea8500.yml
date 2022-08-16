@@ -53,9 +53,9 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           df -h
-      - name: git pull openwrt-19.07
+      - name: git clone openwrt-19.07
         run: |
-          git pull origin/openwrt-19.07
+          git clone --single-branch -b openwrt-19.07 https://github.com/openwrt/openwrt.git ./
           du -h --max-depth=1
       - name: Update feeds
         run: |

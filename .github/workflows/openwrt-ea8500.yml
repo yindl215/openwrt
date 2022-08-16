@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: openwrt-19.07
+          ref: master
 
       - name: Space cleanup
         env:
@@ -53,14 +53,15 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           df -h
-      - name: add kenzo8/openwrt-packages and kenzo8/small
+      - name: git pull openwrt-19.07
         run: |
-          # git pull
-          sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' ./feeds.conf.default
-          sed -i '$a src-git small https://github.com/kenzok8/small' ./feeds.conf.default
+          git pull origin openwrt-19.07:./
           du -h --max-depth=1
       - name: Update feeds
         run: |
+          #add kenzo8/openwrt-packages and kenzo8/small          
+          sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' ./feeds.conf.default
+          sed -i '$a src-git small https://github.com/kenzok8/small' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           

@@ -55,7 +55,7 @@ jobs:
           df -h
       - name: git pull openwrt-19.07
         run: |
-          git pull origin openwrt-19.07:./
+          git pull origin/openwrt-19.07
           du -h --max-depth=1
       - name: Update feeds
         run: |

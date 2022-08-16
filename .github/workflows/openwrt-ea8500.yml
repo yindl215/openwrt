@@ -55,8 +55,8 @@ jobs:
           df -h
       - name: git clone openwrt-19.07
         run: |
-          git clone --single-branch -b openwrt-19.07 https://github.com/openwrt/openwrt.git ./
           du -h --max-depth=1
+          git clone --single-branch -b openwrt-19.07 https://github.com/openwrt/openwrt.git ./
       - name: Update feeds
         run: |
           #add kenzo8/openwrt-packages and kenzo8/small          

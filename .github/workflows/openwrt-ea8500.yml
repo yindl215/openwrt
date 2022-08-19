@@ -84,7 +84,7 @@ jobs:
           cd ./package
           git clone https://github.com/riverscn/luci-app-omcproxy.git
           git clone https://github.com/riverscn/openwrt-iptvhelper.git
-          sed -i 's/192.168.1.1/192.168.0.1/g' package/base-files/files/bin/config_generate
+          sed -i 's/192.168.1.1/192.168.0.1/g' ./base-files/files/bin/config_generate
       - name: download some code
         run: |
           # compiling openwrt-19.07 need add "push @mirrors, 'https:\/\/sources.cdn.openwrt.org'"

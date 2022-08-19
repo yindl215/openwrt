@@ -78,8 +78,8 @@ jobs:
           ./scripts/feeds install -a
           # compiling openwrt-19.07 need use branch master-libcap to replace ./feeds/packages/libs/libcap 
           rm -rf feeds/packages/libs/libcap
-          svn co https://github.com/openwrt/packages/trunk/libs/libcap ./feeds/packages/libs/libcap
-          # svn co https://github.com/coolsnowwolf/lede/master/package/libs/libcap ./feeds/packages/libs/libcap
+          svn co https://github.com/openwrt/openwrt/trunk/packages/libs/libcap ./feeds/packages/libs/libcap
+          # svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/libcap ./feeds/packages/libs/libcap
           # add luci-app-omcproxy and luci-app-iptvhelper
           cd ./package
           git clone https://github.com/riverscn/luci-app-omcproxy.git

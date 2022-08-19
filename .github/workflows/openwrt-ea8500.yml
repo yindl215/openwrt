@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: openwrt-19.07
 
       - name: Space cleanup
         env:
@@ -53,26 +53,46 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           df -h
+          # 可用空间仅有31GB,编译需要约34-38GB空间
+          sudo rm -rf /usr/share/dotnet
+          # 可获得3GB空间
+          df -h
+          sudo rm -rf /usr/local/lib/android
+          # 可获得11GB空间
+          df -h
+          sudo rm -rf /opt/ghc
+          # 可获得0GB空间
+          df -h
       - name: git clone openwrt-19.07
         run: |
           du -h --max-depth=1
-          git clone --single-branch -b openwrt-19.07 https://github.com/openwrt/openwrt.git ./
-      - name: Update feeds
+          git clone --single-branch -b openwrt-19.07 https://github.com/openwrt/openwrt       
+          mv ./openwrt/* ./ 
+          du -h --max-depth=1
+      - name: add kenzo8/openwrt-packages and kenzo8/small Update feeds
         run: |
-          #add kenzo8/openwrt-packages and kenzo8/small          
           sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' ./feeds.conf.default
           sed -i '$a src-git small https://github.com/kenzok8/small' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          
+          # compiling openwrt-19.07 need use branch master-libcap to replace ./feeds/packages/libs/libcap 
+          rm -rf feeds/packages/libs/libcap
+          svn co https://github.com/openwrt/packages/trunk/libs/libcap ./feeds/packages/libs/libcap
+          # svn co https://github.com/coolsnowwolf/lede/master/package/libs/libcap ./feeds/packages/libs/libcap
+          # add luci-app-omcproxy and luci-app-iptvhelper
+          cd ./package
+          git clone https://github.com/riverscn/luci-app-omcproxy.git
+          git clone https://github.com/riverscn/openwrt-iptvhelper.git
+          sed -i 's/192.168.1.1/192.168.0.1/g' package/base-files/files/bin/config_generate
       - name: download some code
         run: |
+          # compiling openwrt-19.07 need add "push @mirrors, 'https:\/\/sources.cdn.openwrt.org'"
           sed -i "s/#push @mirrors, 'https:\/\/mirror1.openwrt.org';/push @mirrors, 'https:\/\/sources.cdn.openwrt.org';/g" ./scripts/download.pl
+          # here is openwrt-19.07 or lede can not download some code
           mkdir -p ./dl
           cd ./dl
           wget -c -r -nd -np http://204.13.154.47:1000/openwrt-dl/
           rm -rf $(find -name "index.html*")
-                 
       - name: Generate configuration file
         run: |
           rm -f ./.config*
@@ -745,7 +765,6 @@ jobs:
           CONFIG_PACKAGE_luci-mod-system=y
           CONFIG_PACKAGE_luci-app-adblock=y
           CONFIG_PACKAGE_luci-app-advanced-reboot=y
-          CONFIG_PACKAGE_luci-app-argon-config=y
           CONFIG_PACKAGE_luci-app-argonne-config=y
           CONFIG_PACKAGE_luci-app-autoreboot=y
           CONFIG_PACKAGE_luci-app-bypass=y
@@ -923,8 +942,18 @@ jobs:
           CONFIG_minisign_WITH_SODIUM=y
           CONFIG_STRACE_NONE=y
           CONFIG_PACKAGE_ubi-utils=y      
+          CONFIG_PACKAGE_luci-app-adguardhome=y
+          CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
+          CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
+          CONFIG_PACKAGE_adguardhome=y
+          CONFIG_PACKAGE_naiveproxy=y
+          CONFIG_PACKAGE_luci-app-omcproxy=y
+          CONFIG_PACKAGE_luci-i18n-omcproxy-zh_Hans=y
+          CONFIG_PACKAGE_omcproxy=y
+          CONFIG_PACKAGE_v2ray-plugin=y
           EOF
           #
+          # CONFIG_PACKAGE_luci-app-argon-config=y
           # CONFIG_PACKAGE_luci-app-adguardhome=y
           # CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
           # CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
@@ -940,12 +969,21 @@ jobs:
           make defconfig
       - name: Make download
         run: |
-          make download -j1 V=s
+          make download -j8 || make download -j1 V=s
           rm -rf $(find ./dl/ -size -1024c)
+          git switch -c 5a2559f0648198c290bb8839b9f6a0adab8ebcdc
+          git switch -c d63ff863800a5645aca4309d5dd5962bd1e95543
+          git switch -c 486bebd9208539058e57e23a12f23103016e09b4
+          git switch -c 697977d8d0ccf0ab596e5692d08608a75dd7f33d
+          git switch -c 740d0102c518cd49f30c5580982b218b480006b1
+          git switch -c 809a00deffe9f3d4ecd15965790a152757073437
+          git switch -c 9228212b4238c0d8c296f795948ede8f2ca0242e
+          git switch -c 9b74deef2816d91e58926e6fab7a6ff931eb3b22
+          git switch -c 31f5cd4b83da5a7c0fdca240b4e72677e4523b6e
           df -h
       - name: Compile firmware
         run: |
-          make -j1 V=sc
+          make -j$(nproc) || make -j1 V=sc
           echo "======================="
           echo "Space usage:"
           echo "======================="
@@ -962,6 +1000,12 @@ jobs:
           cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+          cd ./bin
+          du -h ./ --max-depth=3
+          tar -czvf ea8500.tar.xz targets packages
+          cd -
+          cp ./bin/ea8500.tar.xz ./artifact/buildinfo/
+          
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v2
         with:
@@ -980,12 +1024,19 @@ jobs:
           name: OpenWrt_firmware
           path: ./bin/targets/
 
-      - name: Upload release asset
-        if: github.event == 'release'
-        uses: svenstaro/upload-release-action@v2
+ #     - name: Upload release asset
+ #       if: github.event == 'release'
+ #       uses: svenstaro/upload-release-action@v2
+ #       with:
+ #         repo_token: ${{ secrets.YOURTOKEN }}
+ #         file: ./artifact/firmware/*
+ #         tag: ${{ github.ref }}
+ #         file_glob: true
+      # Publish a release if is a tag
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          repo_token: ${{ secrets.YOURTOKEN }}
-          file: ./artifact/firmware/*
-          tag: ${{ github.ref }}
-          file_glob: true
+          files: |
+            ./bin/ea8500.tar.xz         
 # This is a basic workflow to help you get started with Actions

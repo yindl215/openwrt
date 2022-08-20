@@ -984,7 +984,8 @@ jobs:
           df -h
       - name: Compile firmware
         run: |
-          make -j$(nproc) || make -j1 V=sc
+          # make -j$(nproc) || 
+          make -j1 V=sc
           echo "======================="
           echo "Space usage:"
           echo "======================="
@@ -997,14 +998,15 @@ jobs:
           mkdir -p ./artifact/firmware
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
+          cd ./bin
+          du -h ./ --max-depth=3
+          tar -czvf ea8500.tar.xz targets packages
+          cd -          
           rm -rf $(find ./bin/targets/ -type d -name "packages")
           cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
-          cd ./bin
-          du -h ./ --max-depth=3
-          tar -czvf ea8500.tar.xz targets packages
-          cd -
+
           cp ./bin/ea8500.tar.xz ./artifact/buildinfo/
           
       - name: Deliver buildinfo

@@ -8,20 +8,26 @@
 name: OpenWrt-CI
 
 on:
-  workflow_dispatch:
-    inputs:
-      clean_cache:
-        description: 'Clear caches'
-        required: false
-        type: boolean
-
   push:
-    branches: 
-      - master
+    branches:
+      - main
+    tags:
+      - v*
+  workflow_dispatch:
+#  workflow_dispatch:
+#    inputs:
+#      clean_cache:
+#        description: 'Clear caches'
+#        required: false
+#        type: boolean
+
+# push:
+#   branches: 
+#     - master
   # schedule:
   #   - cron: 0 20 * * *
-  release:
-    types: [published]
+#  release:
+#    types: [published]
 
 jobs:
 

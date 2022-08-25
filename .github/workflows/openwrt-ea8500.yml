@@ -930,7 +930,6 @@ jobs:
           CONFIG_DRIVER_11AC_SUPPORT=y
           CONFIG_DRIVER_11W_SUPPORT=y
           CONFIG_PACKAGE_wpad-basic=y
-          CONFIG_PACKAGE_xray-core=y
           CONFIG_PACKAGE_uboot-envtools=y
           CONFIG_PACKAGE_unzip=y
           CONFIG_PACKAGE_bash=y
@@ -964,6 +963,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin=y
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_Plugin=y
           # CONFIG_PACKAGE_v2ray-plugin=y
+          # CONFIG_PACKAGE_xray-core=y
           # ===============================================================
           # 
           sed -i 's/^[ \t]*//g' ./.config

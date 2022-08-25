@@ -81,7 +81,7 @@ jobs:
           sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' ./feeds.conf.default
           sed -i '$a src-git small https://github.com/kenzok8/small' ./feeds.conf.default
           # use coolsnowwolf/packages replace git.openwrt.org/feed/packages.git
-          sed -i 's/^src-git packages https:\/\/git.openwrt.org\/feed\/packages.git*$/src-git packages https:\/\/github.com\/coolsnowwolf\/packages;openwrt-19.07/g' ./feeds.conf.default
+          sed -i 's/^src-git packages https:\/\/git.openwrt.org\/feed\/packages.git.*$/src-git packages https:\/\/github.com\/coolsnowwolf\/packages;openwrt-19.07/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           # compiling openwrt/openwrt-19.07 need use branch master-libcap to replace ./feeds/packages/libs/libcap 
@@ -946,9 +946,20 @@ jobs:
           CONFIG_minisign_WITH_SODIUM=y
           CONFIG_STRACE_NONE=y
           CONFIG_PACKAGE_ubi-utils=y      
+          CONFIG_PACKAGE_luci-app-adguardhome=y
+          CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
+          CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
+          CONFIG_PACKAGE_adguardhome=y
+          CONFIG_PACKAGE_naiveproxy=y
           CONFIG_PACKAGE_luci-app-omcproxy=y
           CONFIG_PACKAGE_luci-i18n-omcproxy-zh_Hans=y
           CONFIG_PACKAGE_omcproxy=y
+          CONFIG_PACKAGE_luci-app-bypass_INCLUDE_V2ray_plugin=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_Plugin=y
+          CONFIG_PACKAGE_v2ray-plugin=y
+          CONFIG_PACKAGE_xray-core=y
           EOF
           #
           # CONFIG_PACKAGE_luci-app-argon-config=y
